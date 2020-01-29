@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ohtuesimerkki.StatisticsTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-01-29T13:35:50" hostname="lx9-fuxi167" time="0.01">
+  <properties/>
+  <testcase name="findPlayerByName" classname="ohtuesimerkki.StatisticsTest" time="0.006"/>
+  <testcase name="topScorePlayer" classname="ohtuesimerkki.StatisticsTest" time="0.0"/>
+  <testcase name="searchUnexistingPlayer" classname="ohtuesimerkki.StatisticsTest" time="0.0"/>
+  <testcase name="listNonexitsTeam" classname="ohtuesimerkki.StatisticsTest" time="0.0"/>
+  <testcase name="listTeam" classname="ohtuesimerkki.StatisticsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
