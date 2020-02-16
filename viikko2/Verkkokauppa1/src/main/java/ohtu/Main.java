@@ -1,16 +1,22 @@
 package ohtu;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import ohtu.verkkokauppa.*;
 
 public class Main {
 
     public static void main(String[] args) {
+        
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+        
         KirjanpitoInterface kirjanpito = new Kirjanpito();
         
         Kauppa kauppa = new Kauppa(
         new Varasto(kirjanpito),
         new Pankki(kirjanpito),
-        new Viitegeneraattori()
+        ctx.getBean(Viitegeneraattori.class)
         
         );
 
