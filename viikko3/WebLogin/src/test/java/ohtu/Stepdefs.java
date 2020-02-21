@@ -4,6 +4,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
+import java.util.Random;
 import static org.junit.Assert.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -38,21 +39,19 @@ public class Stepdefs {
         logInWith(username, password);
     }    
     
+    @When("random username and password {string} are given")
+    public void randomUsernameAndPasswordAreGiven(String password) {
+        Random r = new Random();
+        logInWith("user"+r.nextInt(1000000), password);
+    }
+
+    
+    
     @Then("user is not logged in and error message is given")
     public void userIsNotLoggedInAndErrorMessageIsGiven() {
         pageHasContent("invalid username or password");
         pageHasContent("Give your credentials to login");
     }    
-    
-    @When("username {string} and password {string} are given")
-    public void usernameAndPasswordAreGiven(String username, String password) throws Throwable {
-        logInWith(username, password);
-    }   
-    
-    @Then("system will respond {string}")
-    public void systemWillRespond(String pageContent) throws Throwable {
-        assertTrue(driver.getPageSource().contains(pageContent));
-    }
     
     @After
     public void tearDown(){
