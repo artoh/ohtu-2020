@@ -49,7 +49,7 @@ public class KauppaTest {
         // määritellään että tuote numero 1 on maito jonka hinta on 5 ja saldo 10
         when(varasto.saldo(1)).thenReturn(10); 
         when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
-        when(varasto.saldo(2)).thenReturn(20);
+        when(varasto.saldo(2)).thenReturn(1);
         when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "keksi", 2));
         when(varasto.saldo(3)).thenReturn(0);
         when(varasto.haeTuote(3)).thenReturn(new Tuote(3, "kahvi", 8));
@@ -114,5 +114,38 @@ public class KauppaTest {
         k.lisaaKoriin(3);
         k.tilimaksu("hessu","54321");
         verify(pankki).tilisiirto("hessu", 42, "54321" ,"33333-44455", 5);                   
+    }
+    
+    @Test
+    public void aloitaAsiointiNollaaSaldon() {
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+        k.lisaaKoriin(3);
+        k.aloitaAsiointi();
+        k.tilimaksu("hessu","54321");
+        verify(pankki).tilisiirto("hessu", 42, "54321" ,"33333-44455", 0);        
+    }
+    
+    @Test
+    public void uusiViitenumeroJokaKerta() {
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+        k.lisaaKoriin(1);
+        k.tilimaksu("hessu","54321");
+        verify(viite, times(1)).uusi();
+
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+        k.lisaaKoriin(1);
+        k.tilimaksu("hessu","54321");
+        verify(viite, times(2)).uusi();
+    }
+    
+    public void tyhjennettyKoriEiMaksaEnaaMitaan() {
+        k.aloitaAsiointi();
+        k.lisaaKoriin(2);
+        k.poistaKorista(2);
+        k.tilimaksu("hessu","54321");
+        verify(pankki).tilisiirto("hessu", 42, "54321" ,"33333-44455", 0);         
     }
 }
